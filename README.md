@@ -1,7 +1,8 @@
+
 PSES - Lane Detector
 
 ## Requirements:
-* ROS (code tested with ROS Indigo)
+* ROS (code tested with ROS Kinetic)
 * MRPT:
 ```sh
 sudo add-apt-repository ppa:joseluisblancoc/mrpt

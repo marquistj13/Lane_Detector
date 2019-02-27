@@ -7,7 +7,7 @@
 #ifndef PREPROCESSOR_H_
 #define PREPROCESSOR_H_
 
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc.hpp>
 #include <lane_detector/DetectorConfig.h>
 #include <cv.h>
 #include <lane_detector/LaneDetector.hh>

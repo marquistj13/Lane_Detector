@@ -9,7 +9,8 @@
 
 #include <lane_detector/LaneDetector.hh>
 #include <lane_detector/DetectorConfig.h>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 #include <geometry_msgs/Point32.h>
 #include <vector>
 #include <stdexcept>

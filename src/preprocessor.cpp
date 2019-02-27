@@ -1,6 +1,6 @@
 #include <lane_detector/preprocessor.h>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/ocl/ocl.hpp>
+#include <opencv2/highgui.hpp>
+// #include <opencv2/ocl/ocl.hpp>
 
 void Preprocessor::preprocess(cv::Mat& originalImg, cv::Mat& img, LaneDetector::IPMInfo& ipmInfo_, LaneDetector::CameraInfo& cameraInfo_) {
         CvMat raw_mat = img;
@@ -49,11 +49,13 @@ void Preprocessor::preprocess(cv::Mat& originalImg, cv::Mat& img, LaneDetector::
         if(config.use_gpu) {
           //subtract mean of the image
           img = cv::cvarrToMat(mat_ptr, true);
-          cv::ocl::oclMat ocl_img(img);
-          cv::ocl::subtract(ocl_img, cv::Scalar(mean_image), ocl_img);
-          cv::ocl::sepFilter2D(ocl_img, ocl_img, CV_32FC1, kernel_x, kernel_y);
+          cv::UMat ocl_img;
+          ocl_img.setTo(img);
+          cv::subtract(ocl_img, cv::Scalar(mean_image), ocl_img);
+          cv::sepFilter2D(ocl_img, ocl_img, CV_32FC1, kernel_x, kernel_y);
           //cv::ocl::abs(ocl_img, ocl_img);
-          img = ocl_img;
+          ocl_img.copyTo(img);
+
         }
         else {
           //subtract mean of the image
