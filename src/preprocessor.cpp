@@ -49,13 +49,17 @@ void Preprocessor::preprocess(cv::Mat& originalImg, cv::Mat& img, LaneDetector::
         if(config.use_gpu) {
           //subtract mean of the image
           img = cv::cvarrToMat(mat_ptr, true);
+          // Two methods to copy mat to Umat, cf:
+          //https://stackoverflow.com/questions/27445398/how-to-read-umat-from-a-file-in-opencv-3-0-beta/27530966#27530966
+          // Method 1
+          // cv::UMat ocl_img = img.getUMat(cv::ACCESS_READ);
+          // Method 2
           cv::UMat ocl_img;
-          ocl_img.setTo(img);
+          img.copyTo(ocl_img);
           cv::subtract(ocl_img, cv::Scalar(mean_image), ocl_img);
           cv::sepFilter2D(ocl_img, ocl_img, CV_32FC1, kernel_x, kernel_y);
           //cv::ocl::abs(ocl_img, ocl_img);
           ocl_img.copyTo(img);
-
         }
         else {
           //subtract mean of the image
